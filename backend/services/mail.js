@@ -1,10 +1,11 @@
 const nodemailer = require('nodemailer');
 const prisma = require('../prisma');
+const { generatePDF } = require('./pdfGenerator');
 
 async function getTransporter() {
   const profile = await prisma.profile.findFirst();
   if (!profile || !profile.smtpHost || !profile.smtpUser || !profile.smtpPass) {
-    throw new Error('SMTP Configuration is missing in the Profile.');
+    throw new Error('La configuración SMTP del perfil está incompleta.');
   }
 
   return nodemailer.createTransport({
@@ -28,12 +29,26 @@ async function sendApplicationEmail(job, profile, coverLetterText) {
     // Fallback email if no specific applyUrl email is found
     const targetEmail = job.applyUrl.includes('@') ? job.applyUrl.replace('mailto:', '') : profile.email;
 
+    // Generate beautifully styled PDF resume to attach automatically
+    let pdfBuffer = null;
+    try {
+      // Default to Spanish for email applications unless profile target is English
+      pdfBuffer = await generatePDF(profile, 'es');
+    } catch (pdfErr) {
+      console.error('Failed to generate PDF attachment:', pdfErr);
+    }
+
     const mailOptions = {
       from: `"${profile.fullName}" <${profile.smtpUser}>`,
       to: targetEmail,
-      subject: `Application for ${job.title} - ${profile.fullName}`,
+      subject: `Postulación para ${job.title} - ${profile.fullName}`,
       text: coverLetterText,
-      // You could attach resume PDF here if implemented
+      attachments: pdfBuffer ? [
+        {
+          filename: `${profile.fullName.replace(/\s+/g, '_')}_CV.pdf`,
+          content: pdfBuffer
+        }
+      ] : []
     };
 
     const info = await transporter.sendMail(mailOptions);

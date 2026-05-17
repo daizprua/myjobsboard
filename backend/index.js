@@ -33,6 +33,9 @@ const path = require('path');
 // Serve static uploads (for profile photo and generated PDFs if needed)
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Serve static screenshots for automated job applications
+app.use('/screenshots', express.static(path.join(__dirname, '../screenshots')));
+
 // Serve frontend static files in production
 app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
