@@ -9,19 +9,17 @@ import Profile from './pages/Profile';
 import PublicCV from './pages/PublicCV';
 
 function PrivateRoute({ children, isAuthenticated }) {
-  return isAuthenticated ? children : <Navigate to="/login" />;
+  // Synchronous localStorage read means we never need a loading state —
+  // auth is known before first paint.
+  return isAuthenticated ? children : <Navigate to="/login" replace />;
 }
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    // Basic auth check
-    const auth = localStorage.getItem('myjobsboard_auth');
-    if (auth === 'true') {
-      setIsAuthenticated(true);
-    }
-  }, []);
+  // Read synchronously so the first render already knows if user is logged in.
+  // This prevents the false-flash that kicks the user to /login on every reload.
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    () => localStorage.getItem('myjobsboard_auth') === 'true'
+  );
 
   const Layout = ({ children }) => (
     <div className="app-container">
