@@ -1,19 +1,16 @@
-# Use official Node.js Alpine image for a smaller footprint, but we need Chromium for Puppeteer
-FROM node:20-alpine
+# Use official Node.js slim image for a robust environment with proper OpenSSL support
+FROM node:20-slim
 
 # Install Chromium and dependencies for Puppeteer
-RUN apk add --no-cache \
+RUN apt-get update && apt-get install -y \
       chromium \
-      nss \
-      freetype \
-      harfbuzz \
-      ca-certificates \
-      ttf-freefont \
-      openssl1.1-compat
+      fonts-freefont-ttf \
+      --no-install-recommends \
+      && rm -rf /var/lib/apt/lists/*
 
 # Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
 WORKDIR /app
 
