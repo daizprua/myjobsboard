@@ -13,23 +13,23 @@ const PROFILE_EN = {
   github: 'github.com/daizprua',
   linkedin: 'linkedin.com/in/darinelaizprua',
   portfolio: 'darinel.dev',
-  skills: 'React, Next.js, Node.js, Express, TypeScript, JavaScript, Python, FastAPI, PostgreSQL, SQLite, Turso (libSQL), Prisma ORM, Redis, Docker, Docker Compose, Nginx, Linux, n8n Automation, Workflow Automation, AI Integration, OpenAI API, LangChain, RAG Pipelines, Vector Databases, Prompt Engineering, AI Agents, GitHub Actions, Dokploy, VPS Deployment, WebAuthn, Passkeys, WebSockets, REST APIs',
+  skills: 'React, Next.js, Node.js, Express, TypeScript, JavaScript, Python, FastAPI, PostgreSQL, SQLite, Turso (libSQL), Prisma ORM, Redis, Docker, Docker Compose, Nginx, Linux, n8n Automation, Workflow Automation, AI Integration, OpenAI API, LangChain, RAG Pipelines, Vector Databases, Prompt Engineering, AI Agents, GitHub Actions, AWS, Azure, VPS Deployment, WebAuthn, Passkeys, WebSockets, REST APIs',
   experience: `Senior Full Stack & AI Automation Engineer | 5+ Years Experience
 
 PROFESSIONAL SUMMARY
-Highly accomplished Senior Full Stack Developer specializing in building high-performance web systems, AI-powered automation pipelines, and scalable cloud architectures. Expert in JavaScript/TypeScript ecosystems and Python, with a proven track record of integrating LLMs (GPT-4o, Claude 3.5 Sonnet) and building autonomous, automated workflows using n8n and self-hosted microservices. Strong experience deploying secure containerized applications on self-hosted VPS environments with Docker and Dokploy.
+Highly accomplished Senior Full Stack Developer specializing in building high-performance web systems, AI-powered automation pipelines, and scalable cloud architectures. Expert in JavaScript/TypeScript ecosystems and Python, with a proven track record of integrating LLMs (GPT-4o, Claude 3.5 Sonnet) and building autonomous, automated workflows using n8n and self-hosted microservices. Strong experience deploying secure containerized applications on self-hosted VPS and Cloud environments (AWS/Azure) with Docker.
 
 KEY COMPETENCIES
 • Frontend: React 18, Next.js 14 (App Router), Vite, TypeScript, Tailwind CSS, Responsive Design
 • Backend: Node.js, Express, FastAPI, Python, REST APIs, WebSockets, SSE, Event-Driven Architecture
 • Databases: PostgreSQL, Turso (libSQL), SQLite, Prisma ORM, Drizzle ORM, Redis Caching
 • AI & Automation: n8n, OpenAI API, LangChain, RAG (Retrieval-Augmented Generation), Prompt Engineering, Automated Agents, Custom Webhooks
-• DevOps & Security: Docker, Docker Compose, Nginx Reverse Proxy, VPS management, Dokploy, CI/CD with GitHub Actions, WebAuthn/Passkeys, JWT, SSL/TLS
+• DevOps & Security: Docker, Docker Compose, Nginx Reverse Proxy, VPS management, AWS, Azure, CI/CD with GitHub Actions, WebAuthn/Passkeys, JWT, SSL/TLS
 
 EXPERIENCE HIGHLIGHTS
 • Designed and developed a production-ready Job Board SaaS integrated with n8n automated application pipelines, AI candidate-matching algorithms, and automated email notifications via SMTP.
 • Created complex custom n8n automation workflows that automate lead generation, platform syncing, and customer support, reducing operational times by 65%.
-• Led database migration to Turso and self-hosted PostgreSQL within Dokploy, reducing overall infrastructure and licensing costs by 80% while enhancing query response rates.
+• Led database migration to Turso and self-hosted PostgreSQL in Cloud/VPS environments, reducing overall infrastructure and licensing costs by 80% while enhancing query response rates.
 • Built secure, passwordless authentication architectures incorporating biometric sign-in (WebAuthn/Passkeys) for commercial customer portals.
 • Formulated and executed continuous delivery (CI/CD) practices utilizing GitHub Actions to deliver zero-downtime Dockerized rolling updates to cloud nodes.
 
@@ -47,25 +47,25 @@ const PROFILE_ES = {
   github: 'github.com/daizprua',
   linkedin: 'linkedin.com/in/darinelaizprua',
   portfolio: 'darinel.dev',
-  skills: 'React, Next.js, Node.js, Express, TypeScript, JavaScript, Python, FastAPI, PostgreSQL, SQLite, Turso (libSQL), Prisma ORM, Redis, Docker, Docker Compose, Nginx, Linux, Automatización con n8n, Automatización de Workflows, Integración de IA, OpenAI API, LangChain, Pipelines RAG, Bases de Datos Vectoriales, Ingeniería de Prompts, Agentes de IA, GitHub Actions, Dokploy, Despliegue en VPS, WebAuthn, Passkeys, WebSockets, APIs REST',
+  skills: 'React, Next.js, Node.js, Express, TypeScript, JavaScript, Python, FastAPI, PostgreSQL, SQLite, Turso (libSQL), Prisma ORM, Redis, Docker, Docker Compose, Nginx, Linux, Automatización con n8n, Automatización de Workflows, Integración de IA, OpenAI API, LangChain, Pipelines RAG, Bases de Datos Vectoriales, Ingeniería de Prompts, Agentes de IA, GitHub Actions, AWS, Azure, Despliegue en VPS, WebAuthn, Passkeys, WebSockets, APIs REST',
   experience: `Desarrollador Full Stack & Ingeniero de Automatización IA Senior | +5 Años de Experiencia
 
 RESUMEN PROFESIONAL
-Desarrollador Full Stack Senior de alto rendimiento, especializado en la creación de sistemas web de excelente rendimiento, flujos de trabajo automatizados con IA y arquitecturas en la nube escalables. Experto en los ecosistemas modernos de JavaScript/TypeScript y Python, con un historial comprobado integrando LLMs (GPT-4o, Claude 3.5 Sonnet) y construyendo flujos autónomos y automatizados utilizando n8n y microservicios autoalojados. Sólida experiencia en el despliegue seguro de aplicaciones contenerizadas en entornos VPS propios mediante Docker y Dokploy.
+Desarrollador Full Stack Senior de alto rendimiento, especializado en la creación de sistemas web de excelente rendimiento, flujos de trabajo automatizados con IA y arquitecturas en la nube escalables. Experto en los ecosistemas modernos de JavaScript/TypeScript y Python, con un historial comprobado integrando LLMs (GPT-4o, Claude 3.5 Sonnet) y construyendo flujos autónomos y automatizados utilizando n8n y microservicios autoalojados. Sólida experiencia en el despliegue seguro de aplicaciones contenerizadas en entornos VPS propios y en la nube (AWS/Azure) mediante Docker.
 
 COMPETENCIAS CLAVE
 • Frontend: React 18, Next.js 14 (App Router), Vite, TypeScript, Tailwind CSS, Diseño Responsivo
 • Backend: Node.js, Express, FastAPI, Python, APIs REST, WebSockets, SSE, Arquitectura Orientada a Eventos
 • Bases de Datos: PostgreSQL, Turso (libSQL), SQLite, Prisma ORM, Drizzle ORM, Caché en Redis
 • IA y Automatización: n8n, OpenAI API, LangChain, RAG (Generación Aumentada por Recuperación), Ingeniería de Prompts, Agentes Autónomos, Webhooks Personalizados
-• DevOps y Seguridad: Docker, Docker Compose, Proxy Inverso Nginx, Gestión de VPS, Dokploy, CI/CD con GitHub Actions, WebAuthn/Passkeys, JWT, SSL/TLS
+• DevOps y Seguridad: Docker, Docker Compose, Proxy Inverso Nginx, Gestión de VPS, AWS, Azure, CI/CD con GitHub Actions, WebAuthn/Passkeys, JWT, SSL/TLS
 
 LOGROS DESTACADOS
 • Diseñé y desarrollé una plataforma SaaS de Tablero de Empleos integrada con flujos automatizados de n8n para postulaciones, algoritmos de coincidencia con IA y notificaciones automáticas por correo electrónico.
 • Creé flujos de automatización complejos en n8n para automatizar la generación de leads, sincronización de plataformas y soporte al cliente, reduciendo los tiempos operativos en un 65%.
-• Lideré la migración de bases de datos a Turso y PostgreSQL autoalojado en Dokploy, reduciendo costos de infraestructura en un 80% y optimizando los tiempos de respuesta.
+• Lideré la migración de bases de datos a Turso y PostgreSQL autoalojado en VPS / Nube, reduciendo costos de infraestructura en un 80% y optimizando los tiempos de respuesta.
 • Diseñé e implementé arquitecturas de autenticación seguras sin contraseña incorporando inicio de sesión biométrico (WebAuthn/Passkeys) para portales de clientes.
-• Formulé y ejecuté prácticas de integración y despliegue continuo (CI/CD) con GitHub Actions para entregar actualizaciones progresivas sin tiempo de inactividad.
+• Formulado y ejecutado prácticas de integración y despliegue continuo (CI/CD) con GitHub Actions para entregar actualizaciones progresivas sin tiempo de inactividad.
 
 CERTIFICACIONES Y FORMACIÓN
 • Aprendizaje autodidacta y basado en proyectos (+10,000 horas)

@@ -11,8 +11,8 @@ async function autoFillApplication(applyUrl, profile, coverLetterText) {
     console.log(`Starting Puppeteer for ${applyUrl}`);
     browser = await puppeteer.launch({
       headless: 'new', // Use new headless mode
+      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
-      // executablePath may be needed on Docker/Dokploy later
     });
 
     const page = await browser.newPage();
