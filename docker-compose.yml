@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  myjobsboard:
+    build: .
+    container_name: myjobsboard_app
+    ports:
+      - "4000:4000"
+    environment:
+      - PORT=4000
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+    volumes:
+      - prisma_data:/app/prisma
+      - screenshots_data:/app/screenshots
+    restart: unless-stopped
+
+volumes:
+  prisma_data:
+  screenshots_data:

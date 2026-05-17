@@ -1,0 +1,87 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+model Profile {
+  id             String          @id @default(uuid())
+  fullName       String
+  email          String          // Correo vinculado para notificaciones/postulación
+  smtpHost       String?         // Servidor de correo saliente
+  smtpPort       Int?
+  smtpUser       String?
+  smtpPass       String?         // Almacenado de forma segura
+  phone          String?
+  github         String?
+  linkedin       String?
+  portfolio      String?
+  bio            String
+  skills         String          // Habilidades separadas por comas
+  resumeText     String?
+  experience     String?         // Historial profesional detallado
+  publicSlug     String          @unique @default("fullstack")
+  publicActive   Boolean         @default(true)
+  linkedinCookie String?         // Cookie de sesión 'li_at' para auto-actualización
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  projects       Project[]
+  authenticators Authenticator[]
+}
+
+model Project {
+  id           String   @id @default(uuid())
+  profileId    String
+  profile      Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  title        String
+  description  String
+  technologies String   // Lista separada por comas
+  liveUrl      String?
+  githubUrl    String?
+  createdAt    DateTime @default(now())
+}
+
+model Authenticator {
+  id           String   @id @default(uuid())
+  credentialID String   @unique // Identificador único devuelto por FaceID/TouchID/Huella
+  publicKey    String   // Llave pública criptográfica en Base64
+  counter      Int      @default(0)
+  transports   String?  // Lista de transportes admitidos en formato JSON
+  profileId    String
+  profile      Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+}
+
+model Job {
+  id           String        @id @default(uuid())
+  title        String
+  company      String
+  logoUrl      String?
+  location     String
+  salary       String?
+  tags         String        // Habilidades/Tecnologías requeridas
+  description  String
+  applyUrl     String
+  source       String        // weworkremotely, remoteok, etc.
+  externalId   String        @unique
+  datePosted   DateTime
+  matchScore   Int?          // Afinada generada por OpenRouter
+  createdAt    DateTime      @default(now())
+  applications Application[]
+}
+
+model Application {
+  id             String   @id @default(uuid())
+  jobId          String
+  job            Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  status         String   // SAVED, APPLYING, APPLIED, INTERVIEW, OFFER, REJECTED
+  coverLetter    String?
+  notes          String?
+  appliedAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  screenshotPath String?  // Prueba de postulación de Puppeteer
+}
