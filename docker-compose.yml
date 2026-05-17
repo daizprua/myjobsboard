@@ -12,8 +12,10 @@ services:
     volumes:
       - prisma_data:/app/prisma
       - screenshots_data:/app/screenshots
+      - uploads_data:/app/backend/uploads
     restart: unless-stopped
 
 volumes:
   prisma_data:
   screenshots_data:
+  uploads_data:

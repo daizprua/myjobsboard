@@ -25,6 +25,7 @@ model Profile {
   skills         String          // Habilidades separadas por comas
   resumeText     String?
   experience     String?         // Historial profesional detallado
+  avatarUrl      String?         // URL de la foto de perfil en el volumen fijo
   publicSlug     String          @unique @default("fullstack")
   publicActive   Boolean         @default(true)
   linkedinCookie String?         // Cookie de sesión 'li_at' para auto-actualización

@@ -30,6 +30,9 @@ app.get('/api/health', (req, res) => {
 
 const path = require('path');
 
+// Serve static uploads (for profile photo and generated PDFs if needed)
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 // Serve frontend static files in production
 app.use(express.static(path.join(__dirname, '../frontend/dist')));
 

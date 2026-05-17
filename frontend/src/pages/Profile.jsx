@@ -1,36 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { ShieldCheck, Fingerprint, Globe, User, Copy, Check } from 'lucide-react';
+import { ShieldCheck, Fingerprint, Globe, User, Copy, Check, FileDown, Upload, Camera, Trash2 } from 'lucide-react';
 import { startRegistration } from '@simplewebauthn/browser';
 
 const API_BASE = import.meta.env.PROD ? '/api' : 'http://localhost:4000/api';
 
-// ─── Professional Profile Templates ─────────────────────────────────────────
+// ─── Professional Profile Templates (Enriched with n8n & Top DBs) ─────────────────
 const PROFILE_EN = {
   fullName: 'Darinel Aizprua',
   email: 'darinelaizprua@gmail.com',
-  skills: 'React, Next.js, Node.js, Express, TypeScript, JavaScript, Python, FastAPI, PostgreSQL, SQLite, Prisma, Docker, Docker Compose, Nginx, Linux, Git, REST APIs, GraphQL, WebSockets, OpenAI API, LangChain, Prompt Engineering, AI Integration, Machine Learning Basics, Tailwind CSS, CSS3, HTML5, Vite, CI/CD, GitHub Actions, Dokploy, VPS Deployment, WebAuthn, Passkeys, Redis',
-  experience: `Senior Full Stack & AI Developer | 5+ Years Experience
+  phone: '+507 6000-0000',
+  github: 'github.com/daizprua',
+  linkedin: 'linkedin.com/in/darinelaizprua',
+  portfolio: 'darinel.dev',
+  skills: 'React, Next.js, Node.js, Express, TypeScript, JavaScript, Python, FastAPI, PostgreSQL, SQLite, Turso (libSQL), Prisma ORM, Redis, Docker, Docker Compose, Nginx, Linux, n8n Automation, Workflow Automation, AI Integration, OpenAI API, LangChain, RAG Pipelines, Vector Databases, Prompt Engineering, AI Agents, GitHub Actions, Dokploy, VPS Deployment, WebAuthn, Passkeys, WebSockets, REST APIs',
+  experience: `Senior Full Stack & AI Automation Engineer | 5+ Years Experience
 
 PROFESSIONAL SUMMARY
-Results-driven Full Stack Developer specializing in building scalable, production-grade web applications and AI-powered systems. Expert in modern JavaScript/TypeScript ecosystems and Python backends, with deep experience integrating LLMs (OpenAI, Claude, local models) into real-world SaaS products. Proven track record deploying containerized microservices on self-hosted VPS infrastructure using Docker and Dokploy.
+Highly accomplished Senior Full Stack Developer specializing in building high-performance web systems, AI-powered automation pipelines, and scalable cloud architectures. Expert in JavaScript/TypeScript ecosystems and Python, with a proven track record of integrating LLMs (GPT-4o, Claude 3.5 Sonnet) and building autonomous, automated workflows using n8n and self-hosted microservices. Strong experience deploying secure containerized applications on self-hosted VPS environments with Docker and Dokploy.
 
 KEY COMPETENCIES
-• Frontend: React 18, Next.js 14 (App Router), Vite, TypeScript, Tailwind CSS, Responsive Design, PWA
-• Backend: Node.js, Express, FastAPI, Python, REST APIs, GraphQL, WebSocket, Server-Sent Events
-• Databases: PostgreSQL, SQLite, Turso (libSQL), Prisma ORM, Redis, Drizzle ORM
-• AI & ML: OpenAI GPT-4/4o, Claude Sonnet, LangChain, RAG pipelines, Embeddings, Vector databases, Prompt Engineering, AI Agents
-• DevOps: Docker, Docker Compose, Nginx, VPS management, Dokploy, GitHub Actions, CI/CD pipelines
-• Security: WebAuthn/Passkeys, JWT, PBKDF2 password hashing, HTTPS/TLS, CORS, Rate limiting
-• Architecture: Microservices, Monorepo, MVC, Repository Pattern, Event-Driven Design
+• Frontend: React 18, Next.js 14 (App Router), Vite, TypeScript, Tailwind CSS, Responsive Design
+• Backend: Node.js, Express, FastAPI, Python, REST APIs, WebSockets, SSE, Event-Driven Architecture
+• Databases: PostgreSQL, Turso (libSQL), SQLite, Prisma ORM, Drizzle ORM, Redis Caching
+• AI & Automation: n8n, OpenAI API, LangChain, RAG (Retrieval-Augmented Generation), Prompt Engineering, Automated Agents, Custom Webhooks
+• DevOps & Security: Docker, Docker Compose, Nginx Reverse Proxy, VPS management, Dokploy, CI/CD with GitHub Actions, WebAuthn/Passkeys, JWT, SSL/TLS
 
 EXPERIENCE HIGHLIGHTS
-• Built and deployed a full-stack AI job board SaaS with LinkedIn data sync, Kanban pipeline, and AI-powered job match scoring
-• Integrated OpenAI and Anthropic LLMs into customer-facing products, reducing manual workload by 60%
-• Architected multi-tenant SaaS applications with secure authentication (passkeys, biometrics, 2FA)
-• Led migration from Firebase to self-hosted Dokploy + PostgreSQL infrastructure, cutting costs by 80%
-• Designed real-time dashboards with WebSocket and SSE for live financial and market data
-• Implemented CI/CD pipelines with GitHub Actions and automated Docker deployments
+• Designed and developed a production-ready Job Board SaaS integrated with n8n automated application pipelines, AI candidate-matching algorithms, and automated email notifications via SMTP.
+• Created complex custom n8n automation workflows that automate lead generation, platform syncing, and customer support, reducing operational times by 65%.
+• Led database migration to Turso and self-hosted PostgreSQL within Dokploy, reducing overall infrastructure and licensing costs by 80% while enhancing query response rates.
+• Built secure, passwordless authentication architectures incorporating biometric sign-in (WebAuthn/Passkeys) for commercial customer portals.
+• Formulated and executed continuous delivery (CI/CD) practices utilizing GitHub Actions to deliver zero-downtime Dockerized rolling updates to cloud nodes.
 
 CERTIFICATIONS & EDUCATION
 • Self-taught & project-based learning (10,000+ hours)
@@ -42,28 +43,29 @@ CERTIFICATIONS & EDUCATION
 const PROFILE_ES = {
   fullName: 'Darinel Aizprua',
   email: 'darinelaizprua@gmail.com',
-  skills: 'React, Next.js, Node.js, Express, TypeScript, JavaScript, Python, FastAPI, PostgreSQL, SQLite, Prisma, Docker, Docker Compose, Nginx, Linux, Git, REST APIs, GraphQL, WebSockets, OpenAI API, LangChain, Ingeniería de Prompts, Integración de IA, Machine Learning, Tailwind CSS, CSS3, HTML5, Vite, CI/CD, GitHub Actions, Dokploy, Despliegue en VPS, WebAuthn, Passkeys, Redis',
-  experience: `Desarrollador Full Stack & IA Senior | +5 Años de Experiencia
+  phone: '+507 6000-0000',
+  github: 'github.com/daizprua',
+  linkedin: 'linkedin.com/in/darinelaizprua',
+  portfolio: 'darinel.dev',
+  skills: 'React, Next.js, Node.js, Express, TypeScript, JavaScript, Python, FastAPI, PostgreSQL, SQLite, Turso (libSQL), Prisma ORM, Redis, Docker, Docker Compose, Nginx, Linux, Automatización con n8n, Automatización de Workflows, Integración de IA, OpenAI API, LangChain, Pipelines RAG, Bases de Datos Vectoriales, Ingeniería de Prompts, Agentes de IA, GitHub Actions, Dokploy, Despliegue en VPS, WebAuthn, Passkeys, WebSockets, APIs REST',
+  experience: `Desarrollador Full Stack & Ingeniero de Automatización IA Senior | +5 Años de Experiencia
 
 RESUMEN PROFESIONAL
-Desarrollador Full Stack orientado a resultados, especializado en construir aplicaciones web escalables y sistemas potenciados por Inteligencia Artificial. Experto en ecosistemas modernos de JavaScript/TypeScript y backends en Python, con amplia experiencia integrando LLMs (OpenAI, Claude, modelos locales) en productos SaaS reales. Historial comprobado desplegando microservicios en contenedores sobre infraestructura VPS propia con Docker y Dokploy.
+Desarrollador Full Stack Senior de alto rendimiento, especializado en la creación de sistemas web de excelente rendimiento, flujos de trabajo automatizados con IA y arquitecturas en la nube escalables. Experto en los ecosistemas modernos de JavaScript/TypeScript y Python, con un historial comprobado integrando LLMs (GPT-4o, Claude 3.5 Sonnet) y construyendo flujos autónomos y automatizados utilizando n8n y microservicios autoalojados. Sólida experiencia en el despliegue seguro de aplicaciones contenerizadas en entornos VPS propios mediante Docker y Dokploy.
 
 COMPETENCIAS CLAVE
-• Frontend: React 18, Next.js 14 (App Router), Vite, TypeScript, Tailwind CSS, Diseño Responsivo, PWA
-• Backend: Node.js, Express, FastAPI, Python, APIs REST, GraphQL, WebSocket, Server-Sent Events
-• Bases de datos: PostgreSQL, SQLite, Turso (libSQL), Prisma ORM, Redis, Drizzle ORM
-• IA y ML: OpenAI GPT-4/4o, Claude Sonnet, LangChain, pipelines RAG, Embeddings, bases de datos vectoriales, Ingeniería de Prompts, Agentes de IA
-• DevOps: Docker, Docker Compose, Nginx, gestión de VPS, Dokploy, GitHub Actions, pipelines CI/CD
-• Seguridad: WebAuthn/Passkeys, JWT, hashing PBKDF2, HTTPS/TLS, CORS, limitación de tasa
-• Arquitectura: Microservicios, Monorepo, MVC, Patrón Repositorio, Diseño orientado a eventos
+• Frontend: React 18, Next.js 14 (App Router), Vite, TypeScript, Tailwind CSS, Diseño Responsivo
+• Backend: Node.js, Express, FastAPI, Python, APIs REST, WebSockets, SSE, Arquitectura Orientada a Eventos
+• Bases de Datos: PostgreSQL, Turso (libSQL), SQLite, Prisma ORM, Drizzle ORM, Caché en Redis
+• IA y Automatización: n8n, OpenAI API, LangChain, RAG (Generación Aumentada por Recuperación), Ingeniería de Prompts, Agentes Autónomos, Webhooks Personalizados
+• DevOps y Seguridad: Docker, Docker Compose, Proxy Inverso Nginx, Gestión de VPS, Dokploy, CI/CD con GitHub Actions, WebAuthn/Passkeys, JWT, SSL/TLS
 
 LOGROS DESTACADOS
-• Construí y desplegué un SaaS de tablero de empleos con IA, sincronización LinkedIn, pipeline Kanban y puntuación de coincidencia de empleos con IA
-• Integré LLMs de OpenAI y Anthropic en productos de cara al cliente, reduciendo el trabajo manual en un 60%
-• Arquitecté aplicaciones SaaS multi-tenant con autenticación segura (passkeys, biométricos, 2FA)
-• Lideré la migración de Firebase a infraestructura Dokploy + PostgreSQL autoalojada, reduciendo costos un 80%
-• Diseñé dashboards en tiempo real con WebSocket y SSE para datos financieros y de mercado en vivo
-• Implementé pipelines CI/CD con GitHub Actions y despliegues Docker automatizados
+• Diseñé y desarrollé una plataforma SaaS de Tablero de Empleos integrada con flujos automatizados de n8n para postulaciones, algoritmos de coincidencia con IA y notificaciones automáticas por correo electrónico.
+• Creé flujos de automatización complejos en n8n para automatizar la generación de leads, sincronización de plataformas y soporte al cliente, reduciendo los tiempos operativos en un 65%.
+• Lideré la migración de bases de datos a Turso y PostgreSQL autoalojado en Dokploy, reduciendo costos de infraestructura en un 80% y optimizando los tiempos de respuesta.
+• Diseñé e implementé arquitecturas de autenticación seguras sin contraseña incorporando inicio de sesión biométrico (WebAuthn/Passkeys) para portales de clientes.
+• Formulé y ejecuté prácticas de integración y despliegue continuo (CI/CD) con GitHub Actions para entregar actualizaciones progresivas sin tiempo de inactividad.
 
 CERTIFICACIONES Y FORMACIÓN
 • Aprendizaje autodidacta y basado en proyectos (+10,000 horas)
@@ -79,18 +81,60 @@ const Profile = () => {
   const [repeatNewPassword, setRepeatNewPassword] = useState('');
   const [pwdLoading, setPwdLoading] = useState(false);
   const [bioLoading, setBioLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [pdfLoading, setPdfLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('en');
   const [copiedField, setCopiedField] = useState(null);
 
   useEffect(() => {
-    axios.get(`${API_BASE}/profile`).then(res => setProfile(res.data));
+    fetchProfile();
   }, []);
+
+  const fetchProfile = () => {
+    axios.get(`${API_BASE}/profile`).then(res => setProfile(res.data));
+  };
 
   const handleSave = async (e) => {
     e.preventDefault();
     try {
       await axios.put(`${API_BASE}/profile`, profile);
-      alert('Profile updated successfully!');
+      alert('¡Perfil actualizado con éxito!');
+    } catch (err) {
+      console.error(err);
+      alert('Error al guardar el perfil.');
+    }
+  };
+
+  const handlePhotoUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('photo', file);
+
+    setUploading(true);
+    try {
+      const res = await axios.post(`${API_BASE}/profile/upload-photo`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      if (res.data.success) {
+        setProfile(prev => ({ ...prev, avatarUrl: res.data.avatarUrl }));
+        alert('¡Foto de perfil actualizada con éxito!');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error al subir la foto de perfil.');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleRemovePhoto = async () => {
+    try {
+      const updated = { ...profile, avatarUrl: null };
+      setProfile(updated);
+      await axios.put(`${API_BASE}/profile`, updated);
+      alert('Foto eliminada.');
     } catch (err) {
       console.error(err);
     }
@@ -105,7 +149,15 @@ const Profile = () => {
       alert(lang === 'en' ? 'English profile loaded and saved!' : '¡Perfil en español cargado y guardado!');
     } catch (err) {
       console.error(err);
+      alert('Error al cargar la plantilla.');
     }
+  };
+
+  const handleDownloadPDF = (lang) => {
+    setPdfLoading(true);
+    const url = `${API_BASE}/profile/pdf?lang=${lang}`;
+    window.open(url, '_blank');
+    setTimeout(() => setPdfLoading(false), 2000);
   };
 
   const copyToClipboard = (text, field) => {
@@ -118,18 +170,18 @@ const Profile = () => {
   const handleChangePassword = async (e) => {
     e.preventDefault();
     if (newPassword !== repeatNewPassword) {
-      alert('New passwords do not match!');
+      alert('¡Las nuevas contraseñas no coinciden!');
       return;
     }
     setPwdLoading(true);
     try {
       const res = await axios.post(`${API_BASE}/auth/change-password`, { currentPassword, newPassword });
-      alert(res.data.message || 'Password changed successfully!');
+      alert(res.data.message || 'Contraseña cambiada con éxito!');
       setCurrentPassword('');
       setNewPassword('');
       setRepeatNewPassword('');
     } catch (err) {
-      alert(err.response?.data?.error || 'Failed to change password');
+      alert(err.response?.data?.error || 'Error al cambiar la contraseña');
     } finally {
       setPwdLoading(false);
     }
@@ -142,13 +194,13 @@ const Profile = () => {
       const attResp = await startRegistration(resp.data);
       const verificationResp = await axios.post(`${API_BASE}/webauthn/verify-registration`, attResp);
       if (verificationResp.data.verified) {
-        alert('Biometric device registered! You can now sign in with Face ID / Touch ID.');
+        alert('¡Dispositivo biométrico registrado! Ya puedes iniciar sesión con Face ID / Touch ID.');
       } else {
-        alert('Biometric registration could not be verified.');
+        alert('La verificación del registro biométrico falló.');
       }
     } catch (err) {
       console.error(err);
-      alert(err.response?.data?.error || 'Biometric registration failed. Ensure you are on HTTPS and your browser supports passkeys.');
+      alert(err.response?.data?.error || 'El registro biométrico falló. Asegúrate de usar HTTPS y que tu navegador admita Passkeys.');
     } finally {
       setBioLoading(false);
     }
@@ -173,9 +225,9 @@ const Profile = () => {
   const tpl = activeTab === 'en' ? PROFILE_EN : PROFILE_ES;
 
   return (
-    <div>
+    <div style={{ maxWidth: '1200px', margin: '0 auto', paddingBottom: '40px' }}>
       <h1 className="page-title">Profile & Settings</h1>
-      <p className="page-subtitle">Manage your CV data, professional profiles, and security</p>
+      <p className="page-subtitle">Manage your CV data, upload a persistent photo, and export standard PDF resumes</p>
 
       <div className="grid-2">
         {/* ── LEFT COLUMN ─────────────────────────────────────── */}
@@ -186,42 +238,165 @@ const Profile = () => {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
               <h3 style={{ fontWeight: 600, margin: 0 }}>Master Profile</h3>
             </div>
+
+            {/* Photo Upload Container */}
+            <div style={{
+              display: 'flex', alignItems: 'center', gap: '20px',
+              backgroundColor: 'var(--bg-main)', borderRadius: '12px', padding: '16px',
+              marginBottom: '20px', border: '1px dashed var(--border-light)'
+            }}>
+              <div style={{ position: 'relative' }}>
+                {profile.avatarUrl ? (
+                  <img
+                    src={`${API_BASE.replace('/api', '')}${profile.avatarUrl}`}
+                    alt="Profile Avatar"
+                    style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--color-accent)' }}
+                  />
+                ) : (
+                  <div style={{
+                    width: '80px', height: '80px', borderRadius: '50%',
+                    backgroundColor: 'var(--border-light)', display: 'flex',
+                    alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)'
+                  }}>
+                    <Camera size={32} />
+                  </div>
+                )}
+                {uploading && (
+                  <div style={{
+                    position: 'absolute', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)',
+                    borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    color: '#fff', fontSize: '11px', fontWeight: 600
+                  }}>
+                    ...
+                  </div>
+                )}
+              </div>
+              <div>
+                <h4 style={{ fontWeight: 600, margin: '0 0 4px 0', fontSize: '14px' }}>Foto de Perfil</h4>
+                <p style={{ color: 'var(--text-muted)', fontSize: '12px', margin: '0 0 10px 0' }}>
+                  Sube una foto profesional para incluir en tu CV PDF.
+                </p>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <label className="btn btn-outline" style={{ cursor: 'pointer', padding: '6px 12px', display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '13px' }}>
+                    <Upload size={14} />
+                    Seleccionar Foto
+                    <input type="file" accept="image/*" onChange={handlePhotoUpload} style={{ display: 'none' }} />
+                  </label>
+                  {profile.avatarUrl && (
+                    <button onClick={handleRemovePhoto} className="btn btn-outline" style={{ borderColor: 'var(--color-danger)', color: 'var(--color-danger)', padding: '6px 12px' }}>
+                      <Trash2 size={14} />
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+
             <form onSubmit={handleSave} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <input
-                className="input-field"
-                placeholder="Full Name"
-                value={profile.fullName || ''}
-                onChange={e => setProfile({ ...profile, fullName: e.target.value })}
-              />
-              <input
-                className="input-field"
-                placeholder="Email"
-                value={profile.email || ''}
-                onChange={e => setProfile({ ...profile, email: e.target.value })}
-              />
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                <input
+                  className="input-field"
+                  placeholder="Full Name"
+                  value={profile.fullName || ''}
+                  onChange={e => setProfile({ ...profile, fullName: e.target.value })}
+                  required
+                />
+                <input
+                  className="input-field"
+                  placeholder="Email"
+                  value={profile.email || ''}
+                  onChange={e => setProfile({ ...profile, email: e.target.value })}
+                  required
+                />
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                <input
+                  className="input-field"
+                  placeholder="Phone Number (e.g. +507 6000-0000)"
+                  value={profile.phone || ''}
+                  onChange={e => setProfile({ ...profile, phone: e.target.value })}
+                />
+                <input
+                  className="input-field"
+                  placeholder="GitHub URL (e.g. github.com/user)"
+                  value={profile.github || ''}
+                  onChange={e => setProfile({ ...profile, github: e.target.value })}
+                />
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                <input
+                  className="input-field"
+                  placeholder="LinkedIn URL (e.g. linkedin.com/in/user)"
+                  value={profile.linkedin || ''}
+                  onChange={e => setProfile({ ...profile, linkedin: e.target.value })}
+                />
+                <input
+                  className="input-field"
+                  placeholder="Portfolio / Website"
+                  value={profile.portfolio || ''}
+                  onChange={e => setProfile({ ...profile, portfolio: e.target.value })}
+                />
+              </div>
+
               <input
                 className="input-field"
                 placeholder="Skills (comma separated)"
                 value={profile.skills || ''}
                 onChange={e => setProfile({ ...profile, skills: e.target.value })}
               />
+
               <textarea
                 className="input-field"
                 placeholder="Experience / Resume Text"
-                rows={6}
+                rows={7}
                 value={profile.experience || ''}
                 onChange={e => setProfile({ ...profile, experience: e.target.value })}
               />
-              <input
-                className="input-field"
-                placeholder="Public Slug (e.g. darinel-dev)"
-                value={profile.publicSlug || ''}
-                onChange={e => setProfile({ ...profile, publicSlug: e.target.value })}
-              />
-              <button type="submit" className="btn btn-primary" style={{ marginTop: '4px' }}>
-                Save Profile
-              </button>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 120px', gap: '12px', alignItems: 'center' }}>
+                <input
+                  className="input-field"
+                  placeholder="Public Slug (e.g. darinel-dev)"
+                  value={profile.publicSlug || ''}
+                  onChange={e => setProfile({ ...profile, publicSlug: e.target.value })}
+                />
+                <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>
+                  Save Profile
+                </button>
+              </div>
             </form>
+          </div>
+
+          {/* Export to PDF Section */}
+          <div className="card">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+              <FileDown size={18} style={{ color: 'var(--color-accent)' }} />
+              <h3 style={{ fontWeight: 600, margin: 0 }}>Export to Premium PDF</h3>
+            </div>
+            <p style={{ color: 'var(--text-muted)', fontSize: '13px', marginBottom: '20px' }}>
+              Generate a beautifully styled, print-ready A4 resume in English or Spanish.
+            </p>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+              <button
+                onClick={() => handleDownloadPDF('en')}
+                className="btn btn-outline"
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+                disabled={pdfLoading}
+              >
+                <FileDown size={16} />
+                English PDF
+              </button>
+              <button
+                onClick={() => handleDownloadPDF('es')}
+                className="btn btn-outline"
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+                disabled={pdfLoading}
+              >
+                <FileDown size={16} />
+                Español PDF
+              </button>
+            </div>
           </div>
 
           {/* Security & Credentials */}
@@ -270,7 +445,7 @@ const Profile = () => {
               <h3 style={{ fontWeight: 600, margin: 0 }}>Professional Profile Templates</h3>
             </div>
             <p style={{ color: 'var(--text-muted)', fontSize: '13px', marginBottom: '20px' }}>
-              Pre-built profiles for a Senior Full Stack & AI Developer. Click a language to preview, then load it directly into your Master Profile.
+              Pre-built templates optimized for a Senior Full Stack & AI Automation Developer (with top DBs & n8n workflows). Click a language to preview, then load it directly into your Master Profile.
             </p>
 
             {/* Language tabs */}
