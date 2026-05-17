@@ -12,6 +12,7 @@ model Profile {
   id             String          @id @default(uuid())
   fullName       String
   email          String          // Correo vinculado para notificaciones/postulación
+  passwordHash   String?         // Almacenado de forma segura (Hash)
   smtpHost       String?         // Servidor de correo saliente
   smtpPort       Int?
   smtpUser       String?

@@ -1,4 +1,5 @@
 const prisma = require('./backend/prisma');
+const { hashPassword } = require('./backend/utils/hash');
 
 async function main() {
   console.log("Seeding database...");
@@ -15,6 +16,7 @@ async function main() {
     data: {
       fullName: "Darinel Aizprua",
       email: "darinelaizprua@gmail.com",
+      passwordHash: hashPassword("admin123"),
       phone: "+52 123-456-7890",
       github: "https://github.com/darinelaizp",
       linkedin: "https://www.linkedin.com/in/darinelaizp/",
