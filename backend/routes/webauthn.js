@@ -6,8 +6,24 @@ const router = express.Router();
 
 // In a real app, RP_ID should be the domain, e.g. "myjobsboard.com"
 const RP_NAME = 'MyJobsBoard';
-const RP_ID = 'localhost'; // Change for production
-const ORIGIN = `http://${RP_ID}:5173`; // Frontend URL
+// Dynamic helpers for domain and origin detection
+const getRpId = (req) => {
+  const host = req.get('host') || '';
+  return host.split(':')[0] || 'localhost';
+};
+
+const getOrigin = (req) => {
+  const origin = req.get('origin');
+  if (origin) return origin.replace(/\/$/, "");
+  
+  const referer = req.get('referer');
+  if (referer) {
+    return referer.replace(/\/$/, "");
+  }
+  
+  const protocol = req.secure || req.headers['x-forwarded-proto'] === 'https' ? 'https' : 'http';
+  return `${protocol}://${req.get('host')}`.replace(/\/$/, "");
+};
 
 // We need a temporary place to store challenge during registration/authentication
 // In production, use Redis or DB. For simplicity here:
@@ -19,10 +35,12 @@ router.post('/generate-registration', async (req, res) => {
     const profile = await prisma.profile.findFirst();
     if (!profile) return res.status(400).json({ error: "Profile not found" });
 
+    const rpId = getRpId(req);
+
     // Generate options
     const options = await generateRegistrationOptions({
       rpName: RP_NAME,
-      rpID: RP_ID,
+      rpID: rpId,
       userID: profile.id,
       userName: profile.email,
       attestationType: 'none',
@@ -44,12 +62,15 @@ router.post('/verify-registration', async (req, res) => {
   try {
     const profile = await prisma.profile.findFirst();
     const expectedChallenge = userChallenges[profile.id];
+    
+    const rpId = getRpId(req);
+    const origin = getOrigin(req);
 
     const verification = await verifyRegistrationResponse({
       response: req.body,
       expectedChallenge,
-      expectedOrigin: ORIGIN,
-      expectedRPID: RP_ID,
+      expectedOrigin: origin,
+      expectedRPID: rpId,
     });
 
     if (verification.verified) {
@@ -83,8 +104,10 @@ router.post('/generate-authentication', async (req, res) => {
       return res.status(400).json({ error: "No authenticators registered." });
     }
 
+    const rpId = getRpId(req);
+
     const options = await generateAuthenticationOptions({
-      rpID: RP_ID,
+      rpID: rpId,
       allowCredentials: authenticators.map(auth => ({
         id: Buffer.from(auth.credentialID, 'base64url'),
         type: 'public-key',
@@ -113,11 +136,14 @@ router.post('/verify-authentication', async (req, res) => {
 
     if (!authenticator) return res.status(400).json({ error: "Authenticator not found" });
 
+    const rpId = getRpId(req);
+    const origin = getOrigin(req);
+
     const verification = await verifyAuthenticationResponse({
       response: req.body,
       expectedChallenge,
-      expectedOrigin: ORIGIN,
-      expectedRPID: RP_ID,
+      expectedOrigin: origin,
+      expectedRPID: rpId,
       authenticator: {
         credentialID: Buffer.from(authenticator.credentialID, 'base64url'),
         credentialPublicKey: Buffer.from(authenticator.publicKey, 'base64url'),
