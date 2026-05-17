@@ -63,31 +63,31 @@ const JobsList = () => {
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
         {jobs.map(job => (
-          <div key={job.id} className="card" style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <div style={{ flex: 1, paddingRight: '24px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
-                <h3 style={{ fontSize: '18px', fontWeight: 600 }}>{job.title}</h3>
+          <div key={job.id} className="card job-card">
+            <div className="job-card-info">
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px', flexWrap: 'wrap' }}>
+                <h3 style={{ fontSize: '18px', fontWeight: 600, margin: 0 }}>{job.title}</h3>
                 {job.matchScore && (
                   <span className="badge badge-success">{job.matchScore}% Match</span>
                 )}
               </div>
-              <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>{job.company} • {job.location}</p>
+              <p style={{ color: 'var(--text-muted)', marginBottom: '12px', fontSize: '14px' }}>{job.company} • {job.location}</p>
               <p style={{ fontSize: '14px', marginBottom: '16px' }}>{job.description.substring(0, 150)}...</p>
-              <div style={{ display: 'flex', gap: '8px' }}>
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                 {job.tags.split(',').slice(0, 3).map(tag => (
                   tag.trim() && <span key={tag} className="badge">{tag.trim()}</span>
                 ))}
               </div>
             </div>
             
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', minWidth: '160px' }}>
-              <button onClick={() => calculateMatch(job.id)} className="btn btn-outline" style={{ display: 'flex', gap: '8px' }}>
+            <div className="job-card-actions">
+              <button onClick={() => calculateMatch(job.id)} className="btn btn-outline" style={{ display: 'flex', gap: '8px', width: '100%' }}>
                 <Sparkles size={16} /> Analyze Match
               </button>
-              <button onClick={() => saveJob(job.id)} className="btn btn-primary" style={{ display: 'flex', gap: '8px' }}>
+              <button onClick={() => saveJob(job.id)} className="btn btn-primary" style={{ display: 'flex', gap: '8px', width: '100%' }}>
                 <Send size={16} /> Save to Kanban
               </button>
-              <a href={job.applyUrl} target="_blank" rel="noreferrer" style={{ textAlign: 'center', fontSize: '13px', color: 'var(--text-muted)' }}>
+              <a href={job.applyUrl} target="_blank" rel="noreferrer" style={{ textAlign: 'center', fontSize: '13px', color: 'var(--text-muted)', marginTop: '4px' }}>
                 View Original
               </a>
             </div>

@@ -12,12 +12,12 @@ const Sidebar = ({ onLogout }) => {
 
   return (
     <aside className="sidebar">
-      <div style={{ padding: '0 16px', marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 700, color: 'var(--text-main)' }}>MyJobsBoard</h2>
-        <p style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Developer Workspace</p>
+      <div className="sidebar-header">
+        <h2 className="sidebar-logo">MyJobsBoard</h2>
+        <p className="sidebar-subtitle">Developer Workspace</p>
       </div>
 
-      <nav style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+      <nav className="sidebar-nav">
         {links.map((link) => {
           const Icon = link.icon;
           return (
@@ -27,20 +27,8 @@ const Sidebar = ({ onLogout }) => {
               className={({ isActive }) => 
                 `sidebar-link ${isActive ? 'active' : ''}`
               }
-              style={({ isActive }) => ({
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                padding: '12px 16px',
-                borderRadius: '8px',
-                textDecoration: 'none',
-                color: isActive ? 'var(--color-accent)' : 'var(--text-main)',
-                backgroundColor: isActive ? 'var(--color-accent-glow)' : 'transparent',
-                fontWeight: isActive ? 600 : 500,
-                transition: 'all 0.2s ease'
-              })}
             >
-              <Icon size={20} />
+              <Icon size={20} className="sidebar-icon" />
               <span>{link.name}</span>
             </NavLink>
           );
@@ -49,11 +37,10 @@ const Sidebar = ({ onLogout }) => {
 
       <button 
         onClick={onLogout}
-        className="btn btn-outline" 
-        style={{ marginTop: 'auto', display: 'flex', gap: '8px', color: 'var(--text-muted)', borderColor: 'transparent' }}
+        className="sidebar-logout" 
       >
         <LogOut size={18} />
-        Log Out
+        <span>Log Out</span>
       </button>
     </aside>
   );
