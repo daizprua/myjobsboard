@@ -20,18 +20,17 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install backend dependencies
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 # Copy frontend package files and install
 COPY frontend/package*.json ./frontend/
-RUN cd frontend && npm install
+RUN cd frontend && npm install --legacy-peer-deps
 
 # Copy all source code
 COPY . .
 
-# Generate Prisma client and Push schema (create dev.db)
+# Generate Prisma client
 RUN npx prisma generate
-RUN npx prisma db push
 
 # Build the frontend Vite application
 RUN cd frontend && npm run build
