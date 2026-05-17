@@ -39,9 +39,30 @@ async function updateLinkedInProfile(cookieValue, headline, summary) {
     }
     console.log("Successfully authenticated with LinkedIn!");
 
+    // Resolve specific profile URL from feed to prevent redirect loops (ERR_TOO_MANY_REDIRECTS)
+    const resolvedProfileUrl = await page.evaluate(() => {
+      const links = Array.from(document.querySelectorAll('a'));
+      for (const a of links) {
+        const href = a.getAttribute('href') || '';
+        if ((href.startsWith('/in/') || href.startsWith('https://www.linkedin.com/in/')) && 
+            href !== '/in/' && 
+            href !== 'https://www.linkedin.com/in/' &&
+            !href.includes('/edit/')) {
+          return href.startsWith('/') ? 'https://www.linkedin.com' + href : href;
+        }
+      }
+      return null;
+    });
+
+    console.log("Resolved profile URL:", resolvedProfileUrl);
+
     // 3. Navigate to personal profile page
     console.log("Navigating to Profile...");
-    await page.goto('https://www.linkedin.com/in/', { waitUntil: 'domcontentloaded', timeout: 20000 });
+    if (resolvedProfileUrl) {
+      await page.goto(resolvedProfileUrl, { waitUntil: 'domcontentloaded', timeout: 20000 });
+    } else {
+      await page.goto('https://www.linkedin.com/in/', { waitUntil: 'domcontentloaded', timeout: 20000 });
+    }
     await new Promise(r => setTimeout(r, 4000)); // Allow profile data to render
     
     // 4. Update the Headline
@@ -126,14 +147,40 @@ async function importLinkedInProfile(cookieValue) {
       httpOnly: true
     });
 
-    console.log("Navigating to Profile...");
-    await page.goto('https://www.linkedin.com/in/', { waitUntil: 'domcontentloaded', timeout: 20000 });
-    await new Promise(r => setTimeout(r, 5000)); // Allow profile data to render
+    console.log("Navigating to LinkedIn Feed...");
+    await page.goto('https://www.linkedin.com/feed/', { waitUntil: 'domcontentloaded', timeout: 20000 });
+    await new Promise(r => setTimeout(r, 4000)); // Allow client-side rendering/hydration
     
     const bodyText = await page.evaluate(() => document.body.innerText);
     if (bodyText.includes('Sign in') || bodyText.includes('Join now')) {
       throw new Error("Failed to authenticate. The 'li_at' cookie might be expired or invalid.");
     }
+    console.log("Successfully authenticated with LinkedIn!");
+
+    // Resolve specific profile URL from feed to prevent redirect loops (ERR_TOO_MANY_REDIRECTS)
+    const resolvedProfileUrl = await page.evaluate(() => {
+      const links = Array.from(document.querySelectorAll('a'));
+      for (const a of links) {
+        const href = a.getAttribute('href') || '';
+        if ((href.startsWith('/in/') || href.startsWith('https://www.linkedin.com/in/')) && 
+            href !== '/in/' && 
+            href !== 'https://www.linkedin.com/in/' &&
+            !href.includes('/edit/')) {
+          return href.startsWith('/') ? 'https://www.linkedin.com' + href : href;
+        }
+      }
+      return null;
+    });
+
+    console.log("Resolved profile URL:", resolvedProfileUrl);
+
+    console.log("Navigating to Profile...");
+    if (resolvedProfileUrl) {
+      await page.goto(resolvedProfileUrl, { waitUntil: 'domcontentloaded', timeout: 20000 });
+    } else {
+      await page.goto('https://www.linkedin.com/in/', { waitUntil: 'domcontentloaded', timeout: 20000 });
+    }
+    await new Promise(r => setTimeout(r, 5000)); // Allow profile data to render
 
     // Scrape data
     console.log("Extracting profile details...");
